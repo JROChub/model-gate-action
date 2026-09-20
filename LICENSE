@@ -1,0 +1,23 @@
+MFENX model-gate action — free wrapper permission, version 1
+Copyright 2026 mfenx LLC. All rights reserved except as permitted below.
+
+mfenx LLC grants permission to use, copy, modify and redistribute the original
+action wrapper, documentation and tests in this repository, without charge,
+including in commercial and production verification workflows. Retain this
+copyright notice and permission with copies or substantial portions of this
+repository. Identify modifications when redistributing a modified wrapper.
+
+This permission applies only to this repository's action wrapper, documentation
+and tests. It does not relicense the MFENX Gate SDK, CKODMK, Power House, Lights
+Out or any other separately supplied software. Those components retain their
+own licenses and notices. Receipt verification is governed by the separately
+supplied Gate verification permission; production issuance and paid services
+remain subject to their own agreements.
+
+The wrapper is provided without warranty, support commitment, regulatory
+certification or guarantee of suitability. To the extent permitted by applicable
+law, mfenx LLC is not liable for damages arising from its use. Nothing here limits
+rights or obligations that applicable law does not permit to be limited.
+
+MFENX names and marks may identify the source of this wrapper. They may not be
+used to suggest endorsement of another product or of a modified wrapper.

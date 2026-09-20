@@ -1,0 +1,46 @@
+name: Verify wrapper
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wrapper:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out the wrapper
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Install the checksum-pinned SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -c 'import sys; assert sys.version_info >= (3, 11)'
+          mkdir -p .gate-test/fixture
+          wheel=.gate-test/mfenx_gate-1.0.0-py3-none-any.whl
+          curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+            https://mfenx.com/gate/downloads/mfenx_gate-1.0.0-py3-none-any.whl \
+            --output "$wheel"
+          printf '%s  %s\n' 'aac76f6f516f93d5aeb58f373ec747b34acc790fafabcbb3643f26b1f9365b4d' "$wheel" | sha256sum --check --strict
+          python3 -m venv .gate-test/venv
+          .gate-test/venv/bin/python -m pip install --disable-pip-version-check "$wheel"
+          printf '%s\n' "$GITHUB_WORKSPACE/.gate-test/venv/bin" >> "$GITHUB_PATH"
+
+      - name: Obtain public demonstration fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in release-receipt.json issuer-public.der model.onnx; do
+            curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+              "https://mfenx.com/verify/example/$file" --output ".gate-test/fixture/$file"
+          done
+
+      - name: Check valid input and fail-closed behavior
+        run: .gate-test/venv/bin/python tests/test_action.py --fixtures .gate-test/fixture
