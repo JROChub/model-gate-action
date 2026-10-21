@@ -2,7 +2,7 @@ name: MFENX Verify
 description: Verify a signed MFENX release receipt against a model artifact in CI. Fails the job on any mismatch.
 branding:
   icon: shield
-  color: blue-dark
+  color: blue
 inputs:
   receipt:
     description: Local release receipt path
