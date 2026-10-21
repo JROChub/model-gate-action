@@ -1,5 +1,8 @@
-name: MFENX release receipt verification
-description: Verify a release attestation, model bytes and an independently approved policy digest without executing a model
+name: MFENX Verify
+description: Verify a signed MFENX release receipt against a model artifact in CI. Fails the job on any mismatch.
+branding:
+  icon: shield
+  color: blue-dark
 inputs:
   receipt:
     description: Local release receipt path
